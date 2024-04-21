@@ -5,7 +5,9 @@ const disconnectButton = document.getElementById('disconnectBleButton');
 const onButton = document.getElementById('onButton');
 const offButton = document.getElementById('offButton');
 const resetButton = document.getElementById('resetButton');
-const retrievedValue = document.getElementById('valueContainer');
+const retrievedValueX = document.getElementById('gyroX');
+const retrievedValueY = document.getElementById('gyroY');
+const retrievedValueZ = document.getElementById('gyroZ');
 const latestValueSent = document.getElementById('valueSent');
 const bleStateContainer = document.getElementById('bleState');
 const timestampContainer = document.getElementById('timestamp');
@@ -14,7 +16,9 @@ const timestampContainer = document.getElementById('timestamp');
 var deviceName ='ESP32';
 var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
 var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
-var sensorCharacteristic= '19b10001-e8f2-537e-4f6c-d104768a1214';
+var sensorCharacteristicX= '19b10001-e8f2-537e-4f6c-d104768a1214';
+var sensorCharacteristicY= '19b10001-e8f2-537e-4f6c-d104768a1214';
+var sensorCharacteristicZ= '19b10001-e8f2-537e-4f6c-d104768a1214';
 
 //Global Variables to Handle Bluetooth
 var bleServer;
@@ -70,19 +74,47 @@ function connectToDevice(){
         console.log("Service discovered:", service.uuid);
         return service.getCharacteristic(sensorCharacteristic);
     })
-    .then(characteristic => {
-        console.log("Characteristic discovered:", characteristic.uuid);
-        sensorCharacteristicFound = characteristic;
-        characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
-        characteristic.startNotifications();
+    .then(characteristicX => {
+        console.log("Characteristic discovered:", characteristicX.uuid);
+        sensorCharacteristicFoundX = characteristicX;
+        characteristicX.addEventListener('characteristicxvaluechanged', handleCharacteristicChangeX);
+        characteristicX.startNotifications();
         console.log("Notifications Started.");
-        return characteristic.readValue();
+        return characteristicX.readValue();
     })
-    .then(value => {
-        console.log("Read value: ", value);
-        const decodedValue = new TextDecoder().decode(value);
-        console.log("Decoded value: ", decodedValue);
-        retrievedValue.innerHTML = decodedValue;
+    .then(valueX => {
+        console.log("Read value: ", valueX);
+        const decodedValueX = new TextDecoder().decode(valueX);
+        console.log("Decoded value: ", decodedValueX);
+        retrievedValueX.innerHTML = decodedValueX;
+    })
+    .then(characteristicY => {
+        console.log("Characteristic discovered:", characteristicY.uuid);
+        sensorCharacteristicFoundY = characteristicY;
+        characteristicY.addEventListener('characteristicyvaluechanged', handleCharacteristicChangeY);
+        characteristicY.startNotifications();
+        console.log("Notifications Started.");
+        return characteristicY.readValue();
+    })
+    .then(valueY => {
+        console.log("Read value: ", valueY);
+        const decodedValueY = new TextDecoder().decode(valueY);
+        console.log("Decoded value: ", decodedValueY);
+        retrievedValueY.innerHTML = decodedValueY;
+    })
+    .then(characteristicZ => {
+        console.log("Characteristic discovered:", characteristicZ.uuid);
+        sensorCharacteristicFoundZ = characteristicZ;
+        characteristicZ.addEventListener('characteristiczvaluechanged', handleCharacteristicChangeZ);
+        characteristicZ.startNotifications();
+        console.log("Notifications Started.");
+        return characteristicZ.readValue();
+    })
+    .then(valueZ => {
+        console.log("Read value: ", valueZ);
+        const decodedValueZ = new TextDecoder().decode(valueZ);
+        console.log("Decoded value: ", decodedValueZ);
+        retrievedValueZ.innerHTML = decodedValueZ;
     })
     .catch(error => {
         console.log('Error: ', error);
@@ -97,10 +129,22 @@ function onDisconnected(event){
     connectToDevice();
 }
 
-function handleCharacteristicChange(event){
-    const newValueReceived = new TextDecoder().decode(event.target.value);
-    console.log("Characteristic value changed: ", newValueReceived);
-    retrievedValue.innerHTML = newValueReceived;
+function handleCharacteristicChangeX(event){
+    const newValueReceivedX = new TextDecoder().decode(event.target.valueX);
+    console.log("Characteristic value changed: ", newValueReceivedX);
+    retrievedValueX.innerHTML = newValueReceivedX;
+    timestampContainer.innerHTML = getDateTime();
+}
+function handleCharacteristicChangeY(event){
+    const newValueReceivedY = new TextDecoder().decode(event.target.valueY);
+    console.log("Characteristic value changed: ", newValueReceivedY);
+    retrievedValueY.innerHTML = newValueReceivedY;
+    timestampContainer.innerHTML = getDateTime();
+}
+function handleCharacteristicChangeZ(event){
+    const newValueReceivedZ = new TextDecoder().decode(event.target.valueZ);
+    console.log("Characteristic value changed: ", newValueReceivedZ);
+    retrievedValueZ.innerHTML = newValueReceivedZ;
     timestampContainer.innerHTML = getDateTime();
 }
 
@@ -128,7 +172,7 @@ function writeOnCharacteristic(value){
 function disconnectDevice() {
     console.log("Disconnect Device.");
     if (bleServer && bleServer.connected) {
-        if (sensorCharacteristicFound) {
+        if (sensorCharacteristicFoundX & sensorCharacteristicFoundY & sensorCharacteristicFoundZ) {
             sensorCharacteristicFound.stopNotifications()
                 .then(() => {
                     console.log("Notifications Stopped");
@@ -136,7 +180,7 @@ function disconnectDevice() {
                 })
                 .then(() => {
                     console.log("Device Disconnected");
-                    bleStateContainer.innerHTML = "Device Disconnected";
+                    bleStateContainer.innerHTML = "Dispositivo Desconectado";
                     bleStateContainer.style.color = "#d13a30";
 
                 })
