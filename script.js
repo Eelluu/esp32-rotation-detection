@@ -209,21 +209,21 @@ function init3D(){
   }
   
   // Resize the 3D object when the browser window changes size
-  function onWindowResize(){
+function onWindowResize(){
     camera.aspect = parentWidth(document.getElementById("3Dcube")) / parentHeight(document.getElementById("3Dcube"));
     //camera.aspect = window.innerWidth /  window.innerHeight;
     camera.updateProjectionMatrix();
     //renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setSize(parentWidth(document.getElementById("3Dcube")), parentHeight(document.getElementById("3Dcube")));
   
-  }
+}
   
-  window.addEventListener('resize', onWindowResize, false);
+window.addEventListener('resize', onWindowResize, false);
   
   // Create the 3D representation
-  init3D();
+init3D();
 
-  if (!!window.EventSource) {
+if (!!window.EventSource) {
     var source = new EventSource('/events');
   
     source.addEventListener('open', function(e) {
@@ -262,4 +262,4 @@ function init3D(){
       document.getElementById("accY").innerHTML = obj.accY;
       document.getElementById("accZ").innerHTML = obj.accZ;
     }, false);
-  }
+}
