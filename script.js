@@ -1,4 +1,14 @@
 // DOM Elements
+
+let scene, camera, rendered, cube;
+
+function parentWidth(elem) {
+    return elem.parentElement.clientWidth;
+  }
+  
+  function parentHeight(elem) {
+    return elem.parentElement.clientHeight;
+  }
 const connectButton = document.getElementById('connectBleButton');
 const disconnectButton = document.getElementById('disconnectBleButton');
 const onButton = document.getElementById('onButton');
