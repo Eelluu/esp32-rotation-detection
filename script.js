@@ -221,7 +221,7 @@ window.addEventListener('resize', onWindowResize, false);
   
   // Create the 3D representation
 init3D();
-
+/*
 if (!!window.EventSource) {
   
     source.addEventListener('gyro_readings', function(e) {
@@ -251,3 +251,4 @@ if (!!window.EventSource) {
       document.getElementById("accZ").innerHTML = obj.accZ;
     }, false);
 }
+*/
