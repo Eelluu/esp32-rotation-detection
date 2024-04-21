@@ -175,7 +175,7 @@ function getDateTime() {
     return datetime;
 }
 
-
+/*
 function init3D(){
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffffff);
@@ -221,7 +221,7 @@ window.addEventListener('resize', onWindowResize, false);
   
   // Create the 3D representation
 init3D();
-/*
+
 if (!!window.EventSource) {
   
     source.addEventListener('gyro_readings', function(e) {
