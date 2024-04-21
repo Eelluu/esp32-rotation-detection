@@ -53,6 +53,9 @@ button {
 .disconnectButton{
     background-color: #d13a30;
 }
+.resetButton{
+    background-color: #4942d9;
+}
 
 .gray-label {
     color: #bebebe;
@@ -61,7 +64,4 @@ button {
 
 .reading {
     font-size: 1.8rem;
-}
-.resetButton{
-    background-color: #4942d9;
 }
