@@ -6,9 +6,9 @@ function parentWidth(elem) {
     return elem.parentElement.clientWidth;
   }
   
-  function parentHeight(elem) {
+function parentHeight(elem) {
     return elem.parentElement.clientHeight;
-  }
+}
 const connectButton = document.getElementById('connectBleButton');
 const disconnectButton = document.getElementById('disconnectBleButton');
 const onButton = document.getElementById('onButton');
