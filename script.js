@@ -200,9 +200,8 @@ function init3D(){
       new THREE.MeshBasicMaterial({color:0x0077b6}),
     ];
   
-    const material = new THREE.MeshFaceMaterial(cubeMaterials);
   
-    cube = new THREE.Mesh(geometry, material);
+    cube = new THREE.Mesh(geometry, cubeMaterials);
     scene.add(cube);
     camera.position.z = 5;
     renderer.render(scene, camera);
