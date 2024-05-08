@@ -88,6 +88,11 @@ function connectToDevice(){
         console.log("Decoded value: ", decodedValueX);
         retrievedValueX.innerHTML = decodedValueX;
     })
+    .then(gattServer =>{
+        bleServer = gattServer;
+        console.log("Connected to GATT Server");
+        return bleServer.getPrimaryService(bleService);
+    })
     .then(service => {
         bleServiceFound = service;
         console.log("Service discovered:", service.uuid);
@@ -106,6 +111,11 @@ function connectToDevice(){
         const decodedValueY = new TextDecoder().decode(valueY);
         console.log("Decoded value: ", decodedValueY);
         retrievedValueY.innerHTML = decodedValueY;
+    })
+    .then(gattServer =>{
+        bleServer = gattServer;
+        console.log("Connected to GATT Server");
+        return bleServer.getPrimaryService(bleService);
     })
     .then(service => {
         bleServiceFound = service;
