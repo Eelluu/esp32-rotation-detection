@@ -72,7 +72,7 @@ function connectToDevice(){
     .then(service => {
         bleServiceFound = service;
         console.log("Service discovered:", service.uuid);
-        return service.getCharacteristic(sensorCharacteristicFoundX);
+        return service.getCharacteristic(sensorCharacteristicX);
     })
     .then(characteristicX => {
         console.log("Characteristic discovered:", characteristicX.uuid);
@@ -91,7 +91,7 @@ function connectToDevice(){
     .then(service => {
         bleServiceFound = service;
         console.log("Service discovered:", service.uuid);
-        return service.getCharacteristic(sensorCharacteristicFoundY);
+        return service.getCharacteristic(sensorCharacteristicY);
     })
     .then(characteristicY => {
         console.log("Characteristic discovered:", characteristicY.uuid);
@@ -110,7 +110,7 @@ function connectToDevice(){
     .then(service => {
         bleServiceFound = service;
         console.log("Service discovered:", service.uuid);
-        return service.getCharacteristic(sensorCharacteristicFoundZ);
+        return service.getCharacteristic(sensorCharacteristicZ);
     })
     .then(characteristicZ => {
         console.log("Characteristic discovered:", characteristicZ.uuid);
