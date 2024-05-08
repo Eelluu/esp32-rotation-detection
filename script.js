@@ -72,7 +72,7 @@ function connectToDevice(){
     .then(service => {
         bleServiceFound = service;
         console.log("Service discovered:", service.uuid);
-        return service.getCharacteristic(sensorCharacteristic);
+        return service.getCharacteristic(sensorCharacteristicFoundX);
     })
     .then(characteristicX => {
         console.log("Characteristic discovered:", characteristicX.uuid);
@@ -88,6 +88,11 @@ function connectToDevice(){
         console.log("Decoded value: ", decodedValueX);
         retrievedValueX.innerHTML = decodedValueX;
     })
+    .then(service => {
+        bleServiceFound = service;
+        console.log("Service discovered:", service.uuid);
+        return service.getCharacteristic(sensorCharacteristicFoundY);
+    })
     .then(characteristicY => {
         console.log("Characteristic discovered:", characteristicY.uuid);
         sensorCharacteristicFoundY = characteristicY;
@@ -101,6 +106,11 @@ function connectToDevice(){
         const decodedValueY = new TextDecoder().decode(valueY);
         console.log("Decoded value: ", decodedValueY);
         retrievedValueY.innerHTML = decodedValueY;
+    })
+    .then(service => {
+        bleServiceFound = service;
+        console.log("Service discovered:", service.uuid);
+        return service.getCharacteristic(sensorCharacteristicFoundZ);
     })
     .then(characteristicZ => {
         console.log("Characteristic discovered:", characteristicZ.uuid);
@@ -133,13 +143,11 @@ function handleCharacteristicChangeX(event){
     const newValueReceivedX = new TextDecoder().decode(event.target.valueX);
     console.log("Characteristic value changed: ", newValueReceivedX);
     retrievedValueX.innerHTML = newValueReceivedX;
-    timestampContainer.innerHTML = getDateTime();
 }
 function handleCharacteristicChangeY(event){
     const newValueReceivedY = new TextDecoder().decode(event.target.valueY);
     console.log("Characteristic value changed: ", newValueReceivedY);
     retrievedValueY.innerHTML = newValueReceivedY;
-    timestampContainer.innerHTML = getDateTime();
 }
 function handleCharacteristicChangeZ(event){
     const newValueReceivedZ = new TextDecoder().decode(event.target.valueZ);
