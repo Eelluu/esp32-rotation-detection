@@ -88,6 +88,11 @@ function connectToDevice(){
         console.log("Decoded value: ", decodedValueX);
         retrievedValueX.innerHTML = decodedValueX;
     })
+    .then(service => {
+        bleServiceFound = service;
+        console.log("Service discovered:", service.uuid);
+        return service.getCharacteristic(sensorCharacteristicY);
+    })
     .then(characteristicY => {
         console.log("Characteristic discovered:", characteristicY.uuid);
         sensorCharacteristicFoundY = characteristicY;
@@ -101,6 +106,11 @@ function connectToDevice(){
         const decodedValueY = new TextDecoder().decode(valueY);
         console.log("Decoded value: ", decodedValueY);
         retrievedValueY.innerHTML = decodedValueY;
+    })
+    .then(service => {
+        bleServiceFound = service;
+        console.log("Service discovered:", service.uuid);
+        return service.getCharacteristic(sensorCharacteristicZ);
     })
     .then(characteristicZ => {
         console.log("Characteristic discovered:", characteristicZ.uuid);
