@@ -14,11 +14,11 @@ const timestampContainer = document.getElementById('timestamp');
 
 //Define BLE Device Specs
 var deviceName ='ESP32';
-var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
+var bleService = '3f99a446-02a8-4846-a64a-8d468982be74';
 var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
-var sensorCharacteristicX= '19b10001-e8f2-537e-4f6c-d104768a1214';
-var sensorCharacteristicY= '19b10001-e8f2-537e-4f6c-d104768a1214';
-var sensorCharacteristicZ= '19b10001-e8f2-537e-4f6c-d104768a1214';
+var sensorCharacteristicX= '038ff370-2844-44ab-8956-4779a0f4870d';
+var sensorCharacteristicY= 'c597038d-566b-428c-ac5c-8ce53d987bf9';
+var sensorCharacteristicZ= '90c365c5-4a27-4fc4-941c-15d58c1b4154';
 
 //Global Variables to Handle Bluetooth
 var bleServer;
