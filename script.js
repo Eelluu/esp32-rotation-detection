@@ -88,54 +88,6 @@ function connectToDevice(){
         console.log("Decoded value: ", decodedValueX);
         retrievedValueX.innerHTML = decodedValueX;
     })
-    .then(gattServer =>{
-        bleServer = gattServer;
-        console.log("Connected to GATT Server");
-        return bleServer.getPrimaryService(bleService);
-    })
-    .then(service => {
-        bleServiceFound = service;
-        console.log("Service discovered:", service.uuid);
-        return service.getCharacteristic(sensorCharacteristicY);
-    })
-    .then(characteristicY => {
-        console.log("Characteristic discovered:", characteristicY.uuid);
-        sensorCharacteristicFoundY = characteristicY;
-        characteristicY.addEventListener('characteristicyvaluechanged', handleCharacteristicChangeY);
-        characteristicY.startNotifications();
-        console.log("Notifications Started.");
-        return characteristicY.readValue();
-    })
-    .then(valueY => {
-        console.log("Read value: ", valueY);
-        const decodedValueY = new TextDecoder().decode(valueY);
-        console.log("Decoded value: ", decodedValueY);
-        retrievedValueY.innerHTML = decodedValueY;
-    })
-    .then(gattServer =>{
-        bleServer = gattServer;
-        console.log("Connected to GATT Server");
-        return bleServer.getPrimaryService(bleService);
-    })
-    .then(service => {
-        bleServiceFound = service;
-        console.log("Service discovered:", service.uuid);
-        return service.getCharacteristic(sensorCharacteristicZ);
-    })
-    .then(characteristicZ => {
-        console.log("Characteristic discovered:", characteristicZ.uuid);
-        sensorCharacteristicFoundZ = characteristicZ;
-        characteristicZ.addEventListener('characteristiczvaluechanged', handleCharacteristicChangeZ);
-        characteristicZ.startNotifications();
-        console.log("Notifications Started.");
-        return characteristicZ.readValue();
-    })
-    .then(valueZ => {
-        console.log("Read value: ", valueZ);
-        const decodedValueZ = new TextDecoder().decode(valueZ);
-        console.log("Decoded value: ", decodedValueZ);
-        retrievedValueZ.innerHTML = decodedValueZ;
-    })
     .catch(error => {
         console.log('Error: ', error);
     })
