@@ -45,9 +45,7 @@ button {
 .offButton{
     background-color: #5f6c6d;
 }
-.resetButton{
-    background-color: #7b61e1;
-}
+
 .connectButton{
     background-color: #24af37;
 }
@@ -55,7 +53,6 @@ button {
 .disconnectButton{
     background-color: #d13a30;
 }
-
 
 .gray-label {
     color: #bebebe;
