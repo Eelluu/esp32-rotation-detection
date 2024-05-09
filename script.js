@@ -12,9 +12,9 @@
     var deviceName ='ESP32';
     var bleService = '3f99a446-02a8-4846-a64a-8d468982be74';
     var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
-    var sensorCharacteristicX= '038ff370-2844-44ab-8956-4779a0f4870d"';
-    var sensorCharacteristicY= '038ff371-2844-44ab-8956-4779a0f4870d"';
-    var sensorCharacteristicZ= '038ff372-2844-44ab-8956-4779a0f4870d"';
+    var sensorCharacteristicX= '038ff370-2844-44ab-8956-4779a0f4870d';
+    var sensorCharacteristicY= '038ff371-2844-44ab-8956-4779a0f4870d';
+    var sensorCharacteristicZ= '038ff372-2844-44ab-8956-4779a0f4870d';
 
     //Global Variables to Handle Bluetooth
     var bleServer;
