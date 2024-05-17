@@ -78,7 +78,7 @@
     // Write to the ESP32 LED Characteristic
     onButton.addEventListener('click', () => writeOnCharacteristic(1));
     offButton.addEventListener('click', () => writeOnCharacteristic(0));
-    resetButton.addEventListener('click', () => writeOnCharacteristic(1));
+    resetButton.addEventListener('click', () => writeOnCharacteristic2(1));
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
