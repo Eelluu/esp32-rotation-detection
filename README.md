@@ -7,4 +7,6 @@ Una vez montado, el esp32 se conecta por BLE a un dispositivo, ya sea móvil u o
 Para Android, Chrome viene por defecto con funcionalidad BLE, pero para iOS, es necesario descargar un navegador extra, ya que Safari no permite a día de escribir ésto, conectar con dispositivos BLE. Bluefy es la opción más sencilla: https://apps.apple.com/es/app/bluefy-web-ble-browser/id1492822055. En Windows, Opera no me ha permitido conectarme a través de BLE, pero Edge y Chromium sí.
 
 
+Si deseas probarlo, puedes usar los archivos html, js y css de éste repositorio, o, usar directamente la página web de github: https://eelluu.github.io/esp32-rotation-detection/
+
 Basado en la implementación web-ble de Random Nerd Tutorials: https://randomnerdtutorials.com/esp32-web-bluetooth/
