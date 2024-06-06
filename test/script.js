@@ -1,53 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>ESP32 Detección Orientación</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="UTF-8">
-</head>
-<body>
-    <div class="topnav">
-        <h1>ESP32 Detección Orientación</h1>
-    </div>
-    <div class="content">
-        <div class="card-grid">
-            <div class="card">
-                <p>
-                    <button id="connectBleButton" class="connectButton"> Conectar BLE</button>
-                    <button id="disconnectBleButton" class="disconnectButton"> Desconectar BLE</button>
-                </p>
-                <p class="gray-label">BLE state: <strong><span id="bleState" style="color:#d13a30;">Desconectado</span></strong></p>
-            </div>
-        </div>
-        <div class="card-grid">
-            <div class="card">
-                <h2>Fetched Value</h2>
-                <p class="reading"><span id="valueContainer">NaN</span></p>
-                <p class="gray-label">Última lectura: <span id="timestamp"></span></p>
-            </div>
-
-            <div class="card">
-                <h2>Control GPIO 2</h2>
-                <button id="onButton" class="onButton">ON</button>
-                <button id="offButton" class="offButton">OFF</button>
-                <button id="resetButton" class="resetButton">Reset</button>
-                <p class="gray-label">Último valor leido: <span id="valueSent"></span></p>
-            </div>
-        </div>
-    </div>
-    <div class="footer">
-        <p>Creado por JS, MR y MT</p>
-    </div>
-</body>
-<script>
     // DOM Elements
     const connectButton = document.getElementById('connectBleButton');
     const disconnectButton = document.getElementById('disconnectBleButton');
     const onButton = document.getElementById('onButton');
     const offButton = document.getElementById('offButton');
-    const resetButton = document.getElementById('resetButton')
     const retrievedValue = document.getElementById('valueContainer');
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
@@ -55,10 +10,11 @@
 
     //Define BLE Device Specs
     var deviceName ='ESP32';
-    var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
-    var ledCharacteristic = '19b10006-e8f2-537e-4f6c-d104768a1214';
-    var sensorCharacteristic= '19b10003-e8f2-537e-4f6c-d104768a1214';
-    var resetCharacteristic= '19b10005-e8f2-537e-4f6c-d104768a1214';
+    var bleService = '3f99a446-02a8-4846-a64a-8d468982be74';
+    var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
+    var sensorCharacteristicX= '038ff370-2844-44ab-8956-4779a0f4870d';
+    var sensorCharacteristicY= '038ff371-2844-44ab-8956-4779a0f4870d';
+    var sensorCharacteristicZ= '038ff372-2844-44ab-8956-4779a0f4870d';
 
     //Global Variables to Handle Bluetooth
     var bleServer;
@@ -78,7 +34,6 @@
     // Write to the ESP32 LED Characteristic
     onButton.addEventListener('click', () => writeOnCharacteristic(1));
     offButton.addEventListener('click', () => writeOnCharacteristic(0));
-    resetButton.addEventListener('click', () => writeOnCharacteristic2(1));
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
@@ -110,12 +65,17 @@
             console.log("Connected to GATT Server");
             return bleServer.getPrimaryService(bleService);
         })
-        .then(service => {
+        .then((service) => {
             bleServiceFound = service;
             console.log("Service discovered:", service.uuid);
-            return service.getCharacteristic(sensorCharacteristic);
+            sensorX = service.getCharacteristic(sensorCharacteristicX);
+            sensorY = service.getCharacteristic(sensorCharacteristicY);
+            sensorZ = service.getCharacteristic(sensorCharacteristicZ);
+
+            return Promise.all([sensorX, sensorY, sensorZ]);
+        
         })
-        .then(characteristic => {
+        .then((characteristic) => {
             console.log("Characteristic discovered:", characteristic.uuid);
             sensorCharacteristicFound = characteristic;
             characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
@@ -152,26 +112,6 @@
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
             bleServiceFound.getCharacteristic(ledCharacteristic)
-            .then(characteristic => {
-                console.log("Found the LED characteristic: ", characteristic.uuid);
-                const data = new Uint8Array([value]);
-                return characteristic.writeValue(data);
-            })
-            .then(() => {
-                latestValueSent.innerHTML = value;
-                console.log("Value written to LEDcharacteristic:", value);
-            })
-            .catch(error => {
-                console.error("Error writing to the LED characteristic: ", error);
-            });
-        } else {
-            console.error ("Bluetooth is not connected. Cannot write to characteristic.")
-            window.alert("Bluetooth is not connected. Cannot write to characteristic. \n Connect to BLE first!")
-        }
-    }
-    function writeOnCharacteristic2(value){
-        if (bleServer && bleServer.connected) {
-            bleServiceFound.getCharacteristic(resetCharacteristic)
             .then(characteristic => {
                 console.log("Found the LED characteristic: ", characteristic.uuid);
                 const data = new Uint8Array([value]);
@@ -231,7 +171,3 @@
         return datetime;
     }
 
-
-</script>
-
-</html>

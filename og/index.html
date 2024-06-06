@@ -32,7 +32,6 @@
                 <h2>Control GPIO 2</h2>
                 <button id="onButton" class="onButton">ON</button>
                 <button id="offButton" class="offButton">OFF</button>
-                <button id="resetButton" class="resetButton">Reset</button>
                 <p class="gray-label">Último valor leido: <span id="valueSent"></span></p>
             </div>
         </div>
@@ -47,7 +46,6 @@
     const disconnectButton = document.getElementById('disconnectBleButton');
     const onButton = document.getElementById('onButton');
     const offButton = document.getElementById('offButton');
-    const resetButton = document.getElementById('resetButton')
     const retrievedValue = document.getElementById('valueContainer');
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
@@ -56,9 +54,8 @@
     //Define BLE Device Specs
     var deviceName ='ESP32';
     var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
-    var ledCharacteristic = '19b10006-e8f2-537e-4f6c-d104768a1214';
-    var sensorCharacteristic= '19b10003-e8f2-537e-4f6c-d104768a1214';
-    var resetCharacteristic= '19b10005-e8f2-537e-4f6c-d104768a1214';
+    var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
+    var sensorCharacteristic= '19b10001-e8f2-537e-4f6c-d104768a1214';
 
     //Global Variables to Handle Bluetooth
     var bleServer;
@@ -78,7 +75,6 @@
     // Write to the ESP32 LED Characteristic
     onButton.addEventListener('click', () => writeOnCharacteristic(1));
     offButton.addEventListener('click', () => writeOnCharacteristic(0));
-    resetButton.addEventListener('click', () => writeOnCharacteristic2(1));
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
@@ -152,26 +148,6 @@
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
             bleServiceFound.getCharacteristic(ledCharacteristic)
-            .then(characteristic => {
-                console.log("Found the LED characteristic: ", characteristic.uuid);
-                const data = new Uint8Array([value]);
-                return characteristic.writeValue(data);
-            })
-            .then(() => {
-                latestValueSent.innerHTML = value;
-                console.log("Value written to LEDcharacteristic:", value);
-            })
-            .catch(error => {
-                console.error("Error writing to the LED characteristic: ", error);
-            });
-        } else {
-            console.error ("Bluetooth is not connected. Cannot write to characteristic.")
-            window.alert("Bluetooth is not connected. Cannot write to characteristic. \n Connect to BLE first!")
-        }
-    }
-    function writeOnCharacteristic2(value){
-        if (bleServer && bleServer.connected) {
-            bleServiceFound.getCharacteristic(resetCharacteristic)
             .then(characteristic => {
                 console.log("Found the LED characteristic: ", characteristic.uuid);
                 const data = new Uint8Array([value]);
